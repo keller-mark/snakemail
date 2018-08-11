@@ -4,6 +4,7 @@ AHA_FILE="$AHA_DIR/aha"
 
 # Compile aha if necessary
 if [ ! -f $AHA_FILE ]; then
+  git submodule update --init
   cd $AHA_DIR && make && cd -
 fi
 
