@@ -17,9 +17,9 @@ LOG_FILE="snakemake.log"
 if [[ $email =~ $email_regex ]] ; then
   echo "Emailing to ${email}"
   echo "Running script ${@:2}"
-  script -q /dev/null ${@:2} | tr -d '\r' | cat | tee $LOG_FILE
-  cat snakemake.log | $AHA_FILE > $HTML_FILE
-  # Set mail headers
+  script -q -c "${@:2}" $LOG_FILE | tee $LOG_FILE
+  cat $LOG_FILE | $AHA_FILE > $HTML_FILE
+  # Set mail headers and send email
   cat $HTML_FILE | mail -s "$(echo -e "Snakemake finished\nContent-Type: text/html")" $email
   rm $LOG_FILE
   rm $HTML_FILE
