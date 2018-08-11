@@ -19,7 +19,7 @@ if [[ $email =~ $email_regex ]] ; then
   script -q /dev/null ${@:2} | tr -d '\r' | cat | tee $LOG_FILE
   cat snakemake.log | $AHA_FILE > $HTML_FILE
   # Set mail headers
-  mailx -s "Snakemake finished" $email < $HTML_FILE
+  cat $HTML_FILE | mail -s "$(echo -e "Snakemake finished\nContent-Type: text/html")" $email
   rm $LOG_FILE
   rm $HTML_FILE
 else
